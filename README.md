@@ -7,6 +7,7 @@
 * Create new Dynamodb table.
 * Since table is partitioned by primary key in dynamodb. 
 And secondary index should be used to access the table by other columns. Secondary index is infact another copy of the source table's required/projected columns and is expensive in terms of storage. For this use case i decided to use id (user generated key as there is no auto generated column in this db)
+* Use TTL field to autodelete rows.
 
 ## Create Elasticsearch index
 
@@ -95,6 +96,20 @@ The public users will need an IAM role to access the site. Create a policy and a
 
 ## Prepare javascript sdk
 ## Query elasticsearch using public api
+e.g. to search by store
+```javascript
+  $http({
+        method: 'POST',
+        url: 'http://search-discounts-b66mp2j5op2utko2iueei4rod4.eu-west-1.es.amazonaws.com/discounts/discount/_search',
+        data: {query: {match: {st: store } } },
+        headers: 'application/json'
+      }).then(function successCallback(response) {
+        console.log(JSON.stringify(response, 2));
+      }, function errorCallback(response) {
+        console.log(JSON.stringify(response));
+      });
+```
+
 ## Host angular app on s3 (static website)
 
 
