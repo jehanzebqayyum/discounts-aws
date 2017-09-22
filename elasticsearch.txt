@@ -1,0 +1,46 @@
+#delete index
+
+
+curl -X DELETE http://search-discounts-b66mp2j5op2utko2iueei4rod4.eu-west-1.es.amazonaws.com/discounts?pretty
+
+#create index
+curl -X PUT http://search-discounts-b66mp2j5op2utko2iueei4rod4.eu-west-1.es.amazonaws.com/discounts?pretty -H "Content-Type: application/json" -d '
+{
+  "settings": {
+    "number_of_shards": 6
+  },
+  "mappings": {
+    "discount": {
+      "properties": {
+        "stDate": {
+          "type": "date"
+        },
+        "endDate": {
+          "type": "date"
+        },
+        "ttl": {
+          "type": "long"
+        },
+        "id": {
+          "type": "text",
+          "index": false
+        },
+        "img": {
+          "type": "text",
+          "index": false
+        },
+        "oldPrice": {
+          "type": "long"
+        },
+        "price": {
+          "type": "long"
+        }
+      }
+    }
+  }
+}
+'
+
+
+curl -X POST http://search-discounts-b66mp2j5op2utko2iueei4rod4.eu-west-1.es.amazonaws.com/discounts/discount/_search -d '
+{"query": {"match": {"_all": "iphone" } } }'
