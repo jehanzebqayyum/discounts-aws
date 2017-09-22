@@ -94,3 +94,7 @@ The public users will need an IAM role to access the site. Create a policy and a
 * Use this role in the identity pool unauthenticated role config.
 
 ## Prepare javascript sdk
+## Query elasticsearch using public api
+## Host angular app on s3 (static website)
+
+
